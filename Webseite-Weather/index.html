@@ -1,0 +1,45 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="stylesheet">
+    <title>Weather App Noah Krip</title>
+    <script>
+        var apiKey = 'fc39032be90b1134b330a0051af4d8ca'; 
+
+        function getWeatherData() {
+            var city = document.getElementById('cityInput').value;
+
+            $.ajax({
+                url: 'http://noahkrip/data/2.5/weather',
+                data: {
+                    q: city,
+                    appid: apiKey
+                },
+                success: function(response) {
+                    displayWeatherData(response);
+                },
+                error: function() {
+                    alert('Fehler beim Abrufen der Wetterdaten.');
+                }
+            });
+        }
+
+        function displayWeatherData(weatherData) {
+            var weatherDataContainer = document.getElementById('weatherDataContainer');
+            weatherDataContainer.innerHTML = '';
+
+            var weatherElement = document.createElement('div');
+            weatherElement.innerHTML = 'City: ' + weatherData.name + ', Temperature: ' + weatherData.main.temp;
+            weatherDataContainer.appendChild(weatherElement);
+        }
+    </script>
+</head>
+<body>
+    <h1>Weather App Noah Krip</h1>
+    <input type="text" id="cityInput" placeholder="Enter city name">
+    <button onclick="getWeatherData()">Get Weather Data</button>
+    <div id="weatherDataContainer"></div>
+</body>
+</html>
